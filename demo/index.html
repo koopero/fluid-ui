@@ -1,0 +1,89 @@
+<html>
+<head>
+	<title>Fluid Multitouch</title>
+	<link rel='stylesheet' href='demo.css'/>
+
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
+	<script src='fluid.js'></script>
+</head>
+<body>
+<div id='vp' class='viewport'>
+	<div id='content' class='content'>
+		Cool!
+	</div>
+</div>
+<div id='viewportpos' class='debug'>view <span><span></div>
+<div id='cursorpos' class='debug'>cursor <span><span></div>
+<script>
+	var viewport = document.getElementById('vp');
+	viewport = Fluid.Viewport( viewport );
+	$(document).ready( function () {
+
+	function range( min, max, quant ) {
+		if ( isNaN( quant ) )
+			quant = Math.abs( min - max ) / 1000;
+
+		return min + Math.round( Math.random() * ( max - min ) / quant ) * quant;
+	}
+
+	var $cont = $("#content");
+
+	var images = [
+		'http://jstueart.files.wordpress.com/2010/06/sasquatch_thumb2.jpg',
+		'http://static.comicvine.com/uploads/original/7/74798/1682251-endangered_20polar_20bear.jpg',
+		'http://upload.wikimedia.org/wikipedia/commons/1/15/Sea_otter_cropped.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/tall/panos/WePtWU_UnderTheBridge_v3_AdobeRGB_2k.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/BaronsSunset.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/PrairiePond_1kh.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/AlbertaWindFarm_v3_2Kh.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/BaronsSunset.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/TsawwassenDeltaPort.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/Nelson.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/GatewayToTheLightFarm.1k.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/SkeletonStadium.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/tall/OsoyoosNocturne-1.1kH.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/bigSquare/panos/GG-FenceBars-v3-2kh_0.jpg',
+		'http://www.thecooperbros.ca/sites/default/files/imagecache/tall/panos/ShamMondayMorningPath.2k.jpg'
+	]
+
+	for ( var i = 0; i < 100; i ++ ) {
+		var z = range( -1, 1 );
+		var p = Fluid.Pos(
+			range( -1024, 1024 ),
+			range( -1024, 1024 ),
+			-z - 2,
+			z,
+			range( 0, 32, 1 )
+		);
+		var img = $('<img/>');
+		img.attr( 'src', images[Math.floor(images.length * Math.random())] );
+
+
+		var node = $("<div class='pos dummy'></div>");
+		//node.append( $("<p>"+p.toString()+"</p>") );
+		node.append( img );
+
+		
+		var movable = Fluid.Movable( node );
+		movable.setPos( p );
+
+		$cont.append( node );
+	}
+
+	var $vp = $("#vp");
+	var vp = $vp[0];
+	$vp.on("move", function ( e ) {
+		e = e.originalEvent;
+		$("#viewportpos span").text( e.pos.toString() );
+	});
+
+	$vp.on("mousemove", function ( e ) {
+		$("#cursorpos span").text( vp.eventToPos( e ).toString() );
+	});
+
+});
+</script>
+</body>
+</html>

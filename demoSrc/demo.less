@@ -1,0 +1,70 @@
+html, body, #vp {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	color: white;
+	background: black;
+	overflow: hidden;
+}
+
+
+
+#vp {
+	background: #333333;
+}
+
+.debug {
+	position: absolute;
+	top: 60px;
+	left: 10px;
+	z-index: 99;
+	color: yellow;
+	font-size: 2em;
+}
+
+#viewportpos {
+
+}
+
+#cursorpos {
+	color: green;
+	top: 120px;
+}
+
+.dummy {
+	background: rgba(255,255,255,0.2 );
+	background-size: 16px, 16px;
+	position: absolute;
+	padding: 8px;
+}
+
+.dummy p {
+	position: relative;
+	margin: 0;
+	display: none;
+}
+
+.dummy.selected  {
+	background: rgba(255,255,255,0.9 );
+}
+
+.viewport {
+	position: relative;
+	overflow: hidden;
+}
+
+.pos {
+	position: absolute;
+
+}
+
+
+.fluid-viewport.draggable {
+
+}
+
+.fluid-viewport.dragzoom {
+	cursor: zoom-in, -webkit-zoom-in;
+}
+
